@@ -22,22 +22,17 @@ int main(const int argc, const char **argv) {
     }
   }
 
-  if (argc < 2) {
-    printf("Usage: %s <process path>\n", argv[0]);
-    return 1;
-  } 
-
   char cwd[PATH_MAX];
   if (getcwd(cwd, sizeof(cwd)) == NULL) {
     perror("getcwd() error");
     return 1;
   }
 
-  const char *process_path = argv[1];
   const char *payload = "libpayload.dylib";
   char payload_path[PATH_MAX];
   snprintf(payload_path, sizeof(payload_path), "%s/%s", cwd, payload);
 
+  const char *process_path = "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer";
   setenv("DYLD_INSERT_LIBRARIES", payload_path, 1);
   setenv("DYLD_FORCE_FLAT_NAMESPACE", "1", 1);
 
